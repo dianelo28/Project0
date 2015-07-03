@@ -12,4 +12,32 @@
 
 h6{
 	font-style: oblique;
+	font-family: Verdana;
+}
+
+body{
+	background-color: #E5E5E5;
+}
+
+h4{
+	border:1px dashed black;
+	padding: 25px;
+	font-family: Verdana;
+	margin-bottom: 25px;
+}
+
+#flip{
+	background-color: #33CCCC;
+	text-align: right;
+	padding-right: 25px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	border-radius: 5px;
+}
+
+#button{
+	background-color: #33CCCC;
+	border-radius: 5px;
+	margin-top:5px;
+	font-size:8px;
 }
