@@ -38,15 +38,23 @@
 <div class = "container">
   <form class="form-horizontal" id="postForm">
    <div class="form-group">
-    <label for="text" class="col-sm-4 control-label">Name</label>
+    <label for="text" class="col-sm-4 control-label">Title</label>
       <div class="col-sm-4">
-       <input type="name" class="form-control" id="inputName" placeholder="Name">
+       <input type="name" class="form-control" id="inputName" placeholder="Blog Post Title">
       </div>
    </div>
+
+   <div class="form-group">
+    <label for="text" class="col-sm-4 control-label">Author</label>
+      <div class="col-sm-4">
+       <input type="name" class="form-control" id="authorName" placeholder="Author">
+      </div>
+   </div>
+
   <div class="form-group">
     <label for="text" class="col-sm-4 control-label">Post</label>
      <div class="col-sm-4">
-      <textarea class="form-control" rows="5" id="inputPost" placeholder="Start Typing!"></textarea>
+      <textarea class="form-control" rows="5" id="inputPost" placeholder="What's on your mind?"></textarea>
      </div>
   </div>
   <div class="form-group">
@@ -80,6 +88,9 @@
           <h2>
             <%= inputName %> 
           </h2>
+          <h6>
+            Written by: <%= authorName %>
+          </h6>
           <h4>
             <%= inputPost %>
           </h4>
