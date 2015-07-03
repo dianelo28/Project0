@@ -1,6 +1,6 @@
 .jumbotron {
 	text-align: center;
-	background: url("http://images.fineartamerica.com/images-medium-large-5/lake-tahoe-summerscape-scott-mcguire.jpg");
+	background: url("http://www.wallpaperfo.com/thumbnails/detail/20120429/black%20and%20white%20fog%20pier%20lamps%202560x1440%20wallpaper_www.wallpaperfo.com_59.jpg");
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center;
@@ -8,6 +8,11 @@
 	width: 100%;
 	background-attachment:fixed;
 	overflow: hidden;
+}
+
+.jumbotron h1 {
+	font-color: #29A6A6 !important;
+	text-align: center;
 }
 
 h6{
@@ -19,6 +24,7 @@ body{
 	background-color: #E5E5E5;
 }
 
+
 h4{
 	border:1px dashed black;
 	padding: 25px;
@@ -27,7 +33,7 @@ h4{
 }
 
 #flip{
-	background-color: #33CCCC;
+	background-color: #29A6A6;
 	text-align: right;
 	padding-right: 25px;
 	padding-top: 2px;
@@ -36,7 +42,7 @@ h4{
 }
 
 #button{
-	background-color: #33CCCC;
+	background-color: #29A6A6;
 	border-radius: 5px;
 	margin-top:5px;
 	font-size:8px;
