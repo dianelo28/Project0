@@ -17,24 +17,6 @@
     </div>
 
 
-<!--     <div class = "container">
-       <div class = "row">
-         <div class = "col-md-6 col-md-offset-3">
- -->
-
-    <!-- Large modal -->
-    <!-- <button type="button" class="btn btn-primary center-block" data-toggle="modal" data-target=".bs-example-modal-lg">Write a post!</button>
-
-    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          ...
-        </div>
-      </div>
-    </div>
-    </div>
-  </div> -->
-
 <div class = "container">
   <form class="form-horizontal" id="postForm">
    <div class="form-group">
@@ -75,7 +57,8 @@
     </div>
   </div>
     
- <script src="https://code.jquery.com/jquery.js"></script>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
  <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
 
@@ -98,8 +81,8 @@
               <%= inputPost %>
               <br>
               <h7>
-                <button type="button" class="btn btn-default btn-xs btn pull-right" id="button" role="button" data-toggle="modal" data-target=".bs-example-modal-sm">Add a comment</button>
-                  <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+                <button type="button" class="btn btn-default btn-xs btn pull-right" id="button" data-toggle="modal" data-target="#comment" role="button">Add a comment</button>
+                  <div class="modal fade bs-example-modal-sm" id="comment" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
                     <div class="modal-dialog modal-sm">
                       <div class="modal-content">
                         ...

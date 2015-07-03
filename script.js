@@ -53,5 +53,4 @@ var $newPost = $('#postForm');
 		$("form").trigger("reset");
 		$('#inputName').focus();
 	})
-
 });
