@@ -11,24 +11,31 @@
 }
 
 .jumbotron h1 {
-	font-color: #29A6A6 !important;
 	text-align: center;
+}
+
+.header{
+	color:#29A6A6;
+	font-family: 'Lobster', cursive;
 }
 
 h6{
 	font-style: oblique;
-	font-family: Verdana;
+	font-family: 'Dancing Script', cursive;
 }
 
 body{
 	background-color: #E5E5E5;
 }
 
+h2{
+	font-family: 'Dancing Script', cursive;
+}
 
 h4{
 	border:1px dashed black;
 	padding: 25px;
-	font-family: Verdana;
+	font-family: 'Overlock', cursive;
 	margin-bottom: 25px;
 }
 
