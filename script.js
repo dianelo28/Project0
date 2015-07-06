@@ -59,7 +59,20 @@ var NewComment = function(modalInputName,modalInputPost){
 	this.modalInputPost = modalInputPost;
 };
 
-NewComment.all=[]
+var newComment1 = new NewComent ["This is great!"];
+var newComment2 = new NewComment ["I don't agree with any of this!"]
+
+NewComment.all=[newComment1, newComment2];
+console.log(NewComment.all);
+
+var $comment = $('#commentSection');
+
+_.each(NewComment.all, function(comment,index){
+	var $newCommentAdd = $(blogTemplate(blogPost));
+	$newCommentAdd.attr('data-index', index);
+	$comment.append($newCommentAdd);
+});
+
 
 NewComment.prototype.save = function(){
 	NewComment.all.push(this);
