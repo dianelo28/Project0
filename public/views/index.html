@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Blog project 0</title>
+    <!-- //bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"> 
+    <!-- stylesheet -->
+    <link type="text/css" rel="stylesheet" href="styles/style.css">   
+    <!--fontawesome for icons--> 
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <!--google font stylesheet-->
+    <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'> 
+    <!--// google font stylesheet-->
+    <link href='http://fonts.googleapis.com/css?family=Dancing+Script' rel='stylesheet' type='text/css'> 
+    <!--google font stylesheet-->
+    <link href='http://fonts.googleapis.com/css?family=Overlock' rel='stylesheet' type='text/css'>
+
+  </head>
+
+  <body>
+    <div class="jumbotron">
+      <div class="container">
+          <h1><span class="header">Welcome!!</span></h1>
+      </div>
+    </div>
+
+
+<div class = "container">
+  <form class="form-horizontal" id="postForm">
+   <div class="form-group">
+    <label for="text" class="col-sm-4 control-label">Title</label>
+      <div class="col-sm-4">
+       <input type="text" class="form-control" id="inputName" placeholder="Blog Post Title">
+      </div>
+   </div>
+
+   <div class="form-group">
+    <label for="text" class="col-sm-4 control-label">Author</label>
+      <div class="col-sm-4">
+       <input type="text" class="form-control" id="authorName" placeholder="Author">
+      </div>
+   </div>
+
+  <div class="form-group">
+    <label for="text" class="col-sm-4 control-label">Post</label>
+     <div class="col-sm-4">
+      <textarea class="form-control" rows="5" input type="text" id="inputPost" placeholder="What's on your mind?"></textarea>
+     </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-10 col-sm-offset-5">
+      <button type="submit" class="btn btn-default id=postButton">Post!</button>
+    </div>
+  </div>
+</form>
+</div>
+
+  <div class = "container">
+    <div class = "row">
+      <div class = "col-md-8 col-md-offset-2">
+        <div id = "blog">
+
+          <div class="modal fade bs-example-modal-lg" id="comment" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+
+                <div class = "container"> <!--//container for modal-->
+
+                  <form class="form-horizontal" id="modalForm"> <!--//modal form name-->
+                   <div class="form-group text-center">
+                      <h2>Feel free to leave a comment </h2> <!--//header for comment form-->
+                    <label for="text" class="col-md-3 control-label">Name</label>
+                      <div class="col-sm-4">
+                       <input type="name" class="form-control" id="modalInputName" placeholder="Name">
+                      </div>
+                   </div>
+
+
+                  <div class="form-group"> <!--//modal form comment-->
+                    <label for="text" class="col-md-3 control-label">Comment</label>
+                     <div class="col-sm-4">
+                      <textarea class="form-control" rows="5" id="modalInputPost" placeholder="What's do you think about this?"></textarea>
+                     </div>
+                  </div>
+
+                  <div class="form-group"> <!--//modal form submit-->
+                    <div class="col-sm-10 col-sm-offset-5">
+                      <button type="submit" class="btn btn-default">Comment!</button>
+                    </div>
+                  </div>
+                </form>
+                </div><!--// container for modal-->
+              </div>
+            </div>
+          </div>
+
+           <div class="modal fade bs-example-modal-lg" id="edit" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+                  <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+
+                      <div class = "container"> <!--//container for modal-->
+
+                        <form class="form-horizontal" id="modalForm"> <!--//modal form name-->
+                         <div class="form-group text-center">
+                            <h2> Make your changes... </h2> <!--//header for edit form-->
+                            </div>
+                                  <div class="modal-body">
+                                    <div class="bold">
+                                      Title
+                                    </div>
+                                    <div class="margin-top-20">
+                                      <input id="editInputName" type="text" class="form-control" />
+                                    </div>
+                                    <div class="bold margin-top-20">
+                                      Author
+                                    </div>
+                                    <div class="margin-top-20">
+                                      <input id="editAuthorName" type="text" class="form-control" />
+                                    </div>
+                                    <div class="bold margin-top-20">
+                                      Post
+                                    </div>
+                                    <div class="margin-top-20">
+                                      <input id="editInputPost" type="text" class="form-control" />
+                                    </div>
+                            </div>
+
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                          <button id="submitEdit" type="button" class="btn btn-success pull-left">Save Edits</button>
+                          <button id="deletePost" type="button" class="btn btn-danger pull-left">Delete Post</button>
+                        </div>
+                      </div><!--// container for modal-->
+                    </div>
+                  </div>
+                <div>
+          <!--underscore template -->
+      <script type="text/template" id="blogTemplate">
+        <div class="blog" id="flip-<%= id %>" data-id= "<%= id %>">
+          <div class="flip">
+            <h2>
+              <%= inputName %> 
+            </h2>
+            <h6>
+              Written by: <%= authorName %>
+            </h6>
+          </div>
+          <div id="panel">
+            <h4>
+              <br>
+              <%= inputPost %>
+              <br>
+              <h7>
+
+              <h7> 
+                <button type="button" class="btn btn-default btn-xs btn pull-right" data-toggle="modal" data-target="#comment" role="button"><i class="fa fa-comment-o"></i> Leave a comment
+                </button>
+
+                  <h6>Comments:</h6>
+              </h7>
+
+              <!--//Edit Post Modal-->
+
+              <button type="button" class="btn btn-default btn-xs btn pull-right editButton" data-toggle="modal" data-target="#edit" role="button"><i class="fa fa-pencil-square-o"></i> Edit Post
+              </button>
+               
+            // <!--/Edit Post Modal-->
+              </h7>
+            </h4>
+          </div>
+        </div>
+      </script>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!--  // bootstrap jquery -->   
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+ <!--  //bootstrap javascript -->
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> 
+
+<!-- //underscore template library -->
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script> 
+
+ <!-- //my script -->
+ <script type="text/javascript" src="scripts/script.js"></script>
+
+  </body>
+</html>
