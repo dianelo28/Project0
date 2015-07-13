@@ -151,7 +151,7 @@
           <!--//underscore template -->
 
       <script type="text/template" id="blogTemplate">
-        <div class="blog" id="flip-<%= id %>" data-id= "<%= id %>">
+        <div class="blog" id="flip-<%= _id %>" data-id= "<%= _id %>">
           <div class="flip">
             <h2>
               <%= inputName %> 
@@ -181,11 +181,10 @@
         </div>
       </script>
 
-
       <!--//underscore template comments -->
 
       <script type="text/template" id="commentTemplate">
-        <div class="comments" id="comment-<%= id %>" data-id= "<%= id %>">
+        <div class="comments" id="comment-<%= _id %>" data-id= "<%= _id %>">
           <div class="comment">
              <h5> Comments: </h5>
                 <h6> <%= commentAuthor %> says:</h6><br>

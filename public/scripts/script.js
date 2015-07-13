@@ -1,3 +1,5 @@
+//client side JS
+
 $(document).ready(function(){
 
 var $blog = $('#blog')
@@ -11,17 +13,19 @@ $.ajax({
 	type:'GET',
 	success: function(data){
 		var blogTemplate = _.template($('#blogTemplate').html());
-		var commentTemplate = _.template($('#commentTemplate').html());
 
-		var allBlogPosts = data
+		var $posts = data
 
-		_.each(allBlogPosts, function(blogPost){
-			var $blogPostAdd = $(blogTemplate(blogPost));
+		_.each($posts, function(item){
+			var $blogPostAdd = $(blogTemplate(item));
 			$blog.prepend($blogPostAdd);
 		});
 	}
 
 })	
+
+//comments
+
 
 //create new posts
 
