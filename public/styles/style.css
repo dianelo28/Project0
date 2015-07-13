@@ -30,9 +30,10 @@ h4{
 	margin-bottom: 25px;
 }
 
-h6{
+h5{
 	font-style: oblique;
 	font-family: 'Dancing Script', cursive;
+	color: black;
 }
 
 body{
@@ -48,16 +49,224 @@ body{
 	border-radius: 5px;
 }
 
-#button{
-	background-color: #29A6A6;
-	border-radius: 5px;
+.commentButton{
+	background-color: #FFFFB5;
+	color:black;
 	margin-top:5px;
 	font-size:8px;
+	text-align: right;
+	border-radius: 50px;
+	transition: all 0.2 ease-in-out;
 }
 
-#editButton{
-	background-color: #FFFFB2;
-	border-radius: 5px;
+.commentButton a {
+	font-family: FontAwesome;
+	color: black;
+	display:block;
+	text-decoration: none;
+}
+
+.commentButton i{
+	color:black;
+}
+
+.commentButton b{
+	display:none;
+}
+
+.commentButton a:hover i{
+	display:none;
+}
+
+.commentButton a:hover b{
+	display:block;
+}
+
+.editButton{
+	background-color: #FFFFB5;
+	color:black;
 	margin-top:5px;
 	font-size:8px;
+	text-align: right;
+	border-radius: 50px;
+	transition: all 0.2 ease-in-out;
+ }
+
+ .editButton a {
+	font-family: FontAwesome;
+	color: black;
+	display:block;
+	text-decoration: none;
 }
+
+.editButton i{
+	color:black;
+}
+
+.editButton b{
+	display:none;
+}
+
+.editButton a:hover i{
+	display:none;
+}
+
+.editButton a:hover b{
+	display:block;
+}
+
+#closeModal{
+	background-color: #29A6A6;
+	color:black;
+	margin-top:5px;
+	font-size:8px;
+	text-align: right;
+	border-radius: 50px;
+	transition: all 0.2 ease-in-out;
+}
+
+#closeModal a {
+	font-family: FontAwesome;
+	color: black;
+	display:block;
+	text-decoration: none;
+}
+
+#closeModal i{
+	color:black;
+}
+
+#closeModal b{
+	display:none;
+}
+
+#closeModal a:hover i{
+	display:none;
+}
+
+#closeModal a:hover b{
+	display:block;
+}
+
+#submitEdit{
+	background-color: #29A6A6;
+	color:black;
+	margin-top:5px;
+	font-size:8px;
+	text-align: right;
+	border-radius: 50px;
+	transition: all 0.2 ease-in-out;
+}
+
+
+#submitEdit a {
+	font-family: FontAwesome;
+	color: black;
+	display:block;
+	text-decoration: none;
+}
+
+#submitEdit i{
+	color:black;
+}
+
+#submitEdit b{
+	display:none;
+}
+
+#submitEdit a:hover i{
+	display:none;
+}
+
+#submitEdit a:hover b{
+	display:block;
+}
+
+#deletePost{
+	background-color: #29A6A6;
+	color:black;
+	margin-top:5px;
+	font-size:8px;
+	text-align: right;
+	border-radius: 50px;
+	transition: all 0.2 ease-in-out;
+}
+
+
+#deletePost a {
+	font-family: FontAwesome;
+	color: black;
+	display:block;
+	text-decoration: none;
+}
+
+#deletePost i{
+	color:black;
+}
+
+#deletePost b{
+	display:none;
+}
+
+#deletePost a:hover i{
+	display:none;
+}
+
+#deletePost a:hover b{
+	display:block;
+}
+
+.margin-top-20 {
+	margin-top:20px;
+}
+
+#modalForm {
+	max-width:800px;
+
+}
+
+.postButton a{
+  color: #E5E5E5;
+  text-decoration:none;
+  text-align: center;
+  display:block; /* important */
+}
+
+.postButton, .first{
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -ms-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;     
+}
+
+
+.postButton{
+  height: 50px;
+  border-radius: 50px;
+  text-align: center;
+  font: normal normal 700 1em/4em Arial,sans-serif;
+  overflow: hidden;
+  width: 150px;
+  background-color: #29A6A6;
+}
+
+.postButton:hover{
+   background-color: #FFFFB5;
+}
+
+.postButton a:hover{
+  text-decoration: none;
+  color: black;
+}
+
+.first{
+  margin-top: 0em;   
+}
+
+.postButton:hover .first{
+  margin-top: -4em;
+}
+
+
+

@@ -53,7 +53,7 @@
 
   <div class="form-group">
     <div class="col-sm-10 col-sm-offset-5">
-      <button type="submit" class="btn btn-default id=postButton">Post!</button>
+      <button type="submit" class="btn btn-default id=postButton"><div class="postButton"><a class="first">Post</a><a class="second">Share your Thoughts</a></div></button>
     </div>
   </div>
 </form>
@@ -70,12 +70,12 @@
 
                 <div class = "container"> <!--//container for modal-->
 
-                  <form class="form-horizontal" id="modalForm"> <!--//modal form name-->
+                  <form class="form-horizontal" id="commentForm"> <!--//modal form name-->
                    <div class="form-group text-center">
                       <h2>Feel free to leave a comment </h2> <!--//header for comment form-->
                     <label for="text" class="col-md-3 control-label">Name</label>
                       <div class="col-sm-4">
-                       <input type="name" class="form-control" id="modalInputName" placeholder="Name">
+                       <input type="name" class="form-control" id="commentAutor" placeholder="Name">
                       </div>
                    </div>
 
@@ -83,7 +83,7 @@
                   <div class="form-group"> <!--//modal form comment-->
                     <label for="text" class="col-md-3 control-label">Comment</label>
                      <div class="col-sm-4">
-                      <textarea class="form-control" rows="5" id="modalInputPost" placeholder="What's do you think about this?"></textarea>
+                      <textarea class="form-control" rows="5" id="comment" placeholder="What's do you think about this?"></textarea>
                      </div>
                   </div>
 
@@ -109,71 +109,85 @@
                             <h2> Make your changes... </h2> <!--//header for edit form-->
                             </div>
                                   <div class="modal-body">
-                                    <div class="bold">
-                                      Title
+                                    <div class="bold col-sm-4">
+                                    Title
                                     </div>
+
                                     <div class="margin-top-20">
                                       <input id="editInputName" type="text" class="form-control" />
                                     </div>
+
                                     <div class="bold margin-top-20">
                                       Author
                                     </div>
                                     <div class="margin-top-20">
                                       <input id="editAuthorName" type="text" class="form-control" />
                                     </div>
+
                                     <div class="bold margin-top-20">
+
                                       Post
                                     </div>
                                     <div class="margin-top-20">
-                                      <input id="editInputPost" type="text" class="form-control" />
+                                     <textarea class="form-control" rows="5" input id="editInputPost" type="text" class="form-control"/></textarea>
                                     </div>
                             </div>
 
                         <div class="modal-footer">
-                          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                          <button id="submitEdit" type="button" class="btn btn-success pull-left">Save Edits</button>
-                          <button id="deletePost" type="button" class="btn btn-danger pull-left">Delete Post</button>
+                          <button id="closeModal" type="button" class="btn btn-default pull-left" data-dismiss="modal"><a><i class="fa fa-times"></i><b>Close</b></a></button>
+                          <button id="submitEdit" type="button" class="btn btn-default pull-left"><a><i class="fa fa-check"></i><b>Save Edits</b></a></button>
+                          <button id="deletePost" type="button" class="btn btn-default pull-left"><a><i class="fa fa-trash-o"></i><b>Delete Post</b></a></button>
                         </div>
                       </div><!--// container for modal-->
                     </div>
                   </div>
                 <div>
-          <!--underscore template -->
+          <!--//underscore template -->
+
       <script type="text/template" id="blogTemplate">
         <div class="blog" id="flip-<%= id %>" data-id= "<%= id %>">
           <div class="flip">
             <h2>
               <%= inputName %> 
             </h2>
-            <h6>
+            <h5>
               Written by: <%= authorName %>
-            </h6>
+            </h5>
           </div>
           <div id="panel">
             <h4>
-              <br>
               <%= inputPost %>
               <br>
-              <h7>
 
               <h7> 
-                <button type="button" class="btn btn-default btn-xs btn pull-right" data-toggle="modal" data-target="#comment" role="button"><i class="fa fa-comment-o"></i> Leave a comment
+                <button type="button" class="btn btn-default btn-xs btn pull-right commentButton" data-toggle="modal" data-target="#comment" role="button"><a><i class="fa fa-comment-o buttonText"></i><b>Leave a comment</b><a>
                 </button>
+                 <!--//Edit Post Modal-->
 
-                  <h6>Comments:</h6>
-              </h7>
+                 <button type="button" class="btn btn-default btn-xs btn pull-right editButton" data-toggle="modal" data-target="#edit" role="button"><a><i class="fa fa-pencil-square-o buttonText"></i><b> Edit Post</b></a>
+                 </button>
+                  
+                <!--//Edit Post Modal-->
 
-              <!--//Edit Post Modal-->
-
-              <button type="button" class="btn btn-default btn-xs btn pull-right editButton" data-toggle="modal" data-target="#edit" role="button"><i class="fa fa-pencil-square-o"></i> Edit Post
-              </button>
-               
-            // <!--/Edit Post Modal-->
               </h7>
             </h4>
           </div>
         </div>
       </script>
+
+
+      <!--//underscore template comments -->
+
+      <script type="text/template" id="commentTemplate">
+        <div class="comments" id="comment-<%= id %>" data-id= "<%= id %>">
+          <div class="comment">
+             <h5> Comments: </h5>
+                <h6> <%= commentAuthor %> says:</h6><br>
+                <h6> <%= comment %> </h6>
+          </div>
+        </div> 
+      </script>
+
 
         </div>
       </div>

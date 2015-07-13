@@ -3,6 +3,7 @@ $(document).ready(function(){
 var $blog = $('#blog')
 
 var blogTemplate = _.template($('#blogTemplate').html());
+var commentTemplate = _.template($('#commentTemplate').html());
 
 //compile phrase template
 $.ajax({
@@ -10,6 +11,7 @@ $.ajax({
 	type:'GET',
 	success: function(data){
 		var blogTemplate = _.template($('#blogTemplate').html());
+		var commentTemplate = _.template($('#commentTemplate').html());
 
 		var allBlogPosts = data
 
@@ -40,21 +42,16 @@ $.ajax({
 		$blog.prepend($blogPostAdd);
 		console.log($newPost);
 		console.log(data);
+			$("form").trigger("reset")
 		}
 	});
 });
 
+//creat new comment
+
+
+
 //edit a post
-
-
-
-// $(document).on('click','#submitEdit', function(event){
-// 	event.preventDefault();
-// 	var postId = $(this).closest('.blog').attr('data-id');
-// 	var editInputName = $(this).find('#editInputForm').val();
-// 	var editAuthorName = $(this).find('#editAuthorName').val();
-// 	var editInputPost = $(this).find('#editInputPost').val();
-// 	console.log(postId);
 
 $(document).on('click', '.editButton', function(event){
 	postId = $($(this).closest('.blog')).attr('data-id');
@@ -72,8 +69,6 @@ $(document).on('click', '.editButton', function(event){
 	});
 
 $('#submitEdit').on('click', function(event){
-	// postId = $($(this).closest('.blog')).attr('data-id');
-	// console.log(postId);
 
 	var post = {
 			inputName: $('#editInputName').val(),
@@ -91,7 +86,6 @@ $('#submitEdit').on('click', function(event){
 			$('#flip-' + postId).replaceWith($blogPostAdd);
 		}
 	});
-
 	$("#edit").modal("hide");
 });
 
