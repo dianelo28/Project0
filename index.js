@@ -15,8 +15,13 @@ app.use(express.static(__dirname + '/public'));
 
 //mongoose
 var mongoose = require('mongoose');
-var blogPosts = require('./models/blogPosts')
+var blogPosts = require('./models/blogPosts');
 mongoose.connect('mongodb://localhost/blogPosts');
+
+
+//sessions
+
+var session = require('express-session')
 
 // built in phrasing
 
@@ -38,25 +43,25 @@ app.get('/', function (req, res) {
 
 // blogPosts index
 
-app.get('/blog', function (req, res) {
+app.get('/api/blog', function (req, res) {
 	blogPosts.find(function(err, posts){
 		res.json(posts);
-		console.log(posts)
-	})
-})
+		console.log(posts);
+	});
+});
 
 //get bt ID
 
-app.get("/blog/:id",function(req,res){
+app.get("/api/blog/:id",function(req,res){
 	var targetId = (req.params.id);
 	blogPosts.findOne({_id: targetId}, function(err, foundPost){
 		res.json(foundPost);
-	})
-})
+	});
+});
 
 //create
 
-app.post('/blog', function (req, res) {
+app.post('/api/blog', function (req, res) {
   	var newPost = new blogPosts ({
   	inputName: req.body.inputName,
   	authorName: req.body.authorName,
@@ -67,8 +72,20 @@ app.post('/blog', function (req, res) {
   		console.log(savedPosts);
   		res.json(savedPosts)
   	});
+
   });
 
+app.post('/api/blog', function (req,res){
+	var newComment = new Comments({
+		commentAuthor: req.body.commentAuthor,
+		commentPost: req.body.commentPost
+	})
+
+	newComment.save(function(err, savedComments){
+		console.log(newComment);
+		res.json(savedComments)
+	});
+});
   // 	if (blogPosts.length>0){
   // 		newPost.id = blogPosts[blogPosts.length - 1].id + 1;
  	// } else {
@@ -81,7 +98,7 @@ app.post('/blog', function (req, res) {
 
 //update/edit blog posts
 
-app.put('/blog/:id', function(req,res){
+app.put('/api/blog/:id', function(req,res){
 	var targetId = (req.params.id)
 	blogPosts.findOne({_id:targetId}, function(err, foundPost){
 
@@ -97,7 +114,7 @@ app.put('/blog/:id', function(req,res){
 
 //delete
 
-app.delete ('/blog/:id', function(req,res){
+app.delete ('/api/blog/:id', function(req,res){
 	var targetId = (req.params.id);
 	blogPosts.findOneAndRemove({_id: targetId}, function(err, deletedPhrase){
 		res.json(deletedPhrase);

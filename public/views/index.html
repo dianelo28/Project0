@@ -88,7 +88,7 @@
                               Comment:
                               </div>
                               <div class="margin-top-20">
-                               <textarea class="form-control" rows="5" input id="comment" type="text" class="form-control"/></textarea>
+                               <textarea class="form-control" rows="5" input id="commentPost" type="text" class="form-control"/></textarea>
                               </div>
                       </div>
 
@@ -186,9 +186,9 @@
       <script type="text/template" id="commentTemplate">
         <div class="comments" id="comment-<%= _id %>" data-id= "<%= _id %>">
           <div class="comment">
-             <h5> Comments: </h5>
-                <h6> <%= commentAuthor %> says:</h6><br>
-                <h6> <%= comment %> </h6>
+             <dl> Comments: </dl>
+                <dt> <%= commentAuthor %> says:</dt>
+                <dd> <%= commentPost %> </dd>
           </div>
         </div> 
       </script>

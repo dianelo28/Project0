@@ -1,4 +1,4 @@
-//client side JS
+<!--//client side JS-->
 
 $(document).ready(function(){
 
@@ -9,7 +9,7 @@ var commentTemplate = _.template($('#commentTemplate').html());
 
 //compile phrase template
 $.ajax({
-	url:'/blog',
+	url:'/api/blog',
 	type:'GET',
 	success: function(data){
 		var blogTemplate = _.template($('#blogTemplate').html());
@@ -21,10 +21,7 @@ $.ajax({
 			$blog.prepend($blogPostAdd);
 		});
 	}
-
-})	
-
-//comments
+});
 
 
 //create new posts
@@ -38,7 +35,7 @@ $('#postForm').on('submit', function(event){
 		}
 
 $.ajax({
-	url:'/blog',
+	url:'/api/blog',
 	type:'POST',
 	data: $newPost,
 	success: function(data) {
@@ -51,8 +48,36 @@ $.ajax({
 	});
 });
 
-//creat new comment
+//create new comment
 
+$(document).on('click', '.commentButton', function(event){
+	postId = $($(this).closest('.blog')).attr('data-id');
+	console.log(postId);
+
+
+	$('#submitComment').on('click', function(event){
+
+	var $newComment = {
+		commentAuthor: $('#commentAuthor').val(),
+		commentPost: $('#commentPost').val()
+	}
+
+	console.log($newComment);
+
+	$.ajax({
+	url:'/api/blog',
+	type:'POST',
+	data: $newComment,
+	success: function(data) {
+		var $commentAdd = $(commentTemplate(data));
+		$blog.prepend($commentAdd);
+		console.log($newComment);
+		console.log(data);
+			$("#comment").modal("hide")
+		}
+	});
+	});
+});
 
 
 //edit a post
@@ -62,7 +87,7 @@ $(document).on('click', '.editButton', function(event){
 	console.log(postId);
 
 	$.ajax({
-		url:'/blog/' + postId,
+		url:'/api/blog/' + postId,
 		type:'GET',
 		success: function(res){
 			$('#editInputName').val(res.inputName);
@@ -82,7 +107,7 @@ $('#submitEdit').on('click', function(event){
 		console.log(post);
 
 	$.ajax({
-		url:'/blog/' + postId,
+		url:'/api/blog/' + postId,
 		type:'PUT',
 		data: post,
 		success: function(data){
@@ -99,7 +124,7 @@ $('#deletePost').on('click', function(event){
 	console.log(phraseId)	
 
 	$.ajax({
-		url:'/blog/' + postId,
+		url:'/api/blog/' + postId,
 		type:'DELETE',
 		success: function(data){
 			$('#flip-' + postId).remove();
