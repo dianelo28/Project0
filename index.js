@@ -15,13 +15,41 @@ app.use(express.static(__dirname + '/public'));
 
 //mongoose
 var mongoose = require('mongoose');
-var blogPosts = require('./models/blogPosts');
+var db = require ('./models/models');
 mongoose.connect('mongodb://localhost/blogPosts');
-
 
 //sessions
 
-var session = require('express-session')
+var session = require('express-session');
+
+app.use(session({
+	secret:'super secret',
+	resave: false,
+	saveUninitialized: true
+}));
+
+app.get('/login', function (req, res) {
+  var html = '<form action="/api/sessions" method="post">' +
+               'Your email: <input type="text" name="email"><br>' +
+               'Your password: <input type="text" name="password"><br>' +
+               '<button type="submit">Submit</button>' +
+               '</form>';
+  if (req.session.user) {
+    html += '<br>Your email from your session is: ' + req.session.user.email;
+  }
+  console.log(req.session);
+  console.log(req.sessionID); 
+  res.send(html);
+})
+
+app.post('/api/sessions', function (req, res) {
+  User.authenticate(req.body.email, req.body.password, function(error, user) {
+    req.session.user = user;
+    res.redirect('/login');
+  });
+});
+
+
 
 // built in phrasing
 
@@ -44,48 +72,60 @@ app.get('/', function (req, res) {
 // blogPosts index
 
 app.get('/api/blog', function (req, res) {
-	blogPosts.find(function(err, posts){
+	db.Post.find(function(err, posts){
 		res.json(posts);
 		console.log(posts);
 	});
 });
 
-//get bt ID
+app.get('/api/posts', function(req,res){
+	db.Post.find({}).populate('author').exec(function(err, allPosts){
+		res.json(allPosts)
+	});
+});
+//get by ID
 
-app.get("/api/blog/:id",function(req,res){
-	var targetId = (req.params.id);
-	blogPosts.findOne({_id: targetId}, function(err, foundPost){
+app.get("/api/posts/:id",function(req,res){
+	var targetId = req.params.id;
+	db.Post.findOne({_id: targetId}, function(err, foundPost){
 		res.json(foundPost);
 	});
 });
 
 //create
 
-app.post('/api/blog', function (req, res) {
-  	var newPost = new blogPosts ({
-  	inputName: req.body.inputName,
-  	authorName: req.body.authorName,
-  	inputPost: req.body.inputPost
-  	})
+app.post('/api/posts', function (req, res) {
+  	var newAuthor = new db.Author({
+  		name:req.body.authorName
+  	});
+  		console.log(newAuthor);
+  		newAuthor.save();
 
-  	newPost.save(function(err, savedPosts){
-  		console.log(savedPosts);
-  		res.json(savedPosts)
+  	var newPost = new db.Post ({
+  	inputName: req.body.inputName,
+  	authorName: newAuthor._id,
+  	inputPost: req.body.inputPost
   	});
 
-  });
+  	console.log(newPost);
+  	newPost.save(function(err, savedPosts){
+  		res.json(savedPosts);
+  	});
+ });
 
-app.post('/api/blog', function (req,res){
-	var newComment = new Comments({
-		commentAuthor: req.body.commentAuthor,
-		commentPost: req.body.commentPost
-	})
+// app.post('/api/blog', function (req,res){
+// 	var newComment = new Comment({
+// 		commentAuthor: req.body.commentAuthor,
+// 		commentPost: req.body.commentPost,
+// 		// posts.push(Comments);
+// 		// posts.save();
+// 	})
 
-	newComment.save(function(err, savedComments){
-		console.log(newComment);
-		res.json(savedComments)
-	});
-});
+// 	newComment.save(function(err, savedComments){
+// 		console.log(newComment);
+// 		res.json(savedComments)
+// 	});
+// });
   // 	if (blogPosts.length>0){
   // 		newPost.id = blogPosts[blogPosts.length - 1].id + 1;
  	// } else {
@@ -100,23 +140,23 @@ app.post('/api/blog', function (req,res){
 
 app.put('/api/blog/:id', function(req,res){
 	var targetId = (req.params.id)
-	blogPosts.findOne({_id:targetId}, function(err, foundPost){
+	db.Post.findOne({_id:targetId}, function(err, foundPost){
 
 	foundPost.inputName = req.body.inputName || foundPost.inputName;
 	foundPost.authorName = req.body.authorName || foundPost.authorName;
 	foundPost.inputPost = req.body.inputPost || foundPost.inputPost;
 
 	foundPost.save(function(err,savedPosts){
-	res.json(foundPost);
+	res.json(savedPosts);
 		});
 	});
 });
 
 //delete
 
-app.delete ('/api/blog/:id', function(req,res){
+app.delete ('/api/posts/:id', function(req,res){
 	var targetId = (req.params.id);
-	blogPosts.findOneAndRemove({_id: targetId}, function(err, deletedPhrase){
+	db.Post.findOneAndRemove({_id: targetId}, function(err, deletedPhrase){
 		res.json(deletedPhrase);
 	})
 })
@@ -131,3 +171,4 @@ var server = app.listen(process.env.PORT || 3000, function () {
   console.log('Example app listening at http://%s:%s', host, port);
 
 });
+

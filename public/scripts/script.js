@@ -35,7 +35,7 @@ $('#postForm').on('submit', function(event){
 		}
 
 $.ajax({
-	url:'/api/blog',
+	url:'/api/posts',
 	type:'POST',
 	data: $newPost,
 	success: function(data) {
@@ -65,7 +65,7 @@ $(document).on('click', '.commentButton', function(event){
 	console.log($newComment);
 
 	$.ajax({
-	url:'/api/blog',
+	url:'/api/posts',
 	type:'POST',
 	data: $newComment,
 	success: function(data) {
@@ -87,7 +87,7 @@ $(document).on('click', '.editButton', function(event){
 	console.log(postId);
 
 	$.ajax({
-		url:'/api/blog/' + postId,
+		url:'/api/posts/' + postId,
 		type:'GET',
 		success: function(res){
 			$('#editInputName').val(res.inputName);
