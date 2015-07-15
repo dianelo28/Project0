@@ -161,6 +161,54 @@ app.delete ('/api/posts/:id', function(req,res){
 	})
 })
 
+//get all comments for one post
+
+app.get('/api/posts/:postid/comments', function(req,res){
+	db.Post.findOne({_id: req.params.postid}, function (err, post){
+		res.json(post.comments);
+	});
+});
+
+//add a new comment to a post
+
+app.post('/api/posts/:postid/comments', function(req,res){
+	db.Post.findOne({_id:req.params.postid},function(err,post){
+		var newComment = new db.Comment({commentPost: req.body.commentPost});
+			post.comments.push(newComment);
+			res.json(newComment);
+	});
+});
+
+// get all authors
+
+app.get('/api/authors', function(req,res){
+	db.Author.find({}), function(err, authors){
+		res.json(authors);
+	};
+});
+
+//create a new author
+
+app.post('/api/authors', function(req,res){
+	var newAuthor = new db.Author({commentauthor: req.body.commentAuthor});
+	newAuthor.save(function(err, author){
+		res.json(author);
+	});
+});
+
+//assign a specific author to a specific post
+
+app.put('/api/posts/:postid/authors/:authorid', function(req,res){
+	db.Author.find({_id: req.params.authorid}, function(err, author){
+		db.Post.find({_id: req.params.postid}, function(err, post){
+			post.author = author._id;
+			post.save(function(err, savedPost){
+				res.json(savedPost);
+			});
+		});
+	});
+});
+
 
 // listen on port 3000
 var server = app.listen(process.env.PORT || 3000, function () {
