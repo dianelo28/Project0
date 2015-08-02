@@ -20,6 +20,7 @@ app.use(express.static(__dirname + '/public'));
 var mongoose = require('mongoose');
 var db = require ('./models/models');
 var User = require('./models/Users');
+
 mongoose.connect(
   process.env.MONGOLAB_URI ||
   process.env.MONGOHQ_URL ||
