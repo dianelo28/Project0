@@ -93,7 +93,6 @@ app.get('/api/posts', function(req,res){
 		console.log(allPosts);
 		res.json(allPosts)
 	});
-});
 //get by ID
 
 app.get("/api/posts/:id",function(req,res){
