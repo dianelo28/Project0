@@ -3,8 +3,10 @@
 // require express framework and additional modules
 var express = require('express'),
     app = express(),
-    bodyParser = require('body-parser');
-    _ = require("underscore");
+    bodyParser = require('body-parser'),
+    _ = require("underscore"),
+    bcrypt = require('bcrypt'),
+    salt = bcrypt.genSaltSync(10);
 
 // tell app to use bodyParser middleware
 app.use(bodyParser.urlencoded({extended: true}));
@@ -13,41 +15,49 @@ app.use(bodyParser.json());
 // serve js and css files from public folder
 app.use(express.static(__dirname + '/public'));
 
-//mongoose
+//mongoose/models
+
 var mongoose = require('mongoose');
 var db = require ('./models/models');
-mongoose.connect('mongodb://localhost/blogPosts');
+var User = require('./models/Users');
+mongoose.connect(
+  process.env.MONGOLAB_URI ||
+  process.env.MONGOHQ_URL ||
+  'mongodb://localhost/blogPosts' // plug in the db name you've been using
+);
+
 
 //sessions
 
 var session = require('express-session');
 
-app.use(session({
-	secret:'super secret',
-	resave: false,
-	saveUninitialized: true
-}));
 
-app.get('/login', function (req, res) {
-  var html = '<form action="/api/sessions" method="post">' +
-               'Your email: <input type="text" name="email"><br>' +
-               'Your password: <input type="text" name="password"><br>' +
-               '<button type="submit">Submit</button>' +
-               '</form>';
-  if (req.session.user) {
-    html += '<br>Your email from your session is: ' + req.session.user.email;
-  }
-  console.log(req.session);
-  console.log(req.sessionID); 
-  res.send(html);
-})
+// app.use(session({
+// 	secret:'super secret',
+// 	resave: false,
+// 	saveUninitialized: true
+// }));
 
-app.post('/api/sessions', function (req, res) {
-  User.authenticate(req.body.email, req.body.password, function(error, user) {
-    req.session.user = user;
-    res.redirect('/login');
-  });
-});
+// app.get('/login', function (req, res) {
+//   var html = '<form action="/api/sessions" method="post">' +
+//                'Your email: <input type="text" name="email"><br>' +
+//                'Your password: <input type="text" name="password"><br>' +
+//                '<button type="submit">Submit</button>' +
+//                '</form>';
+//   if (req.session.user) {
+//     html += '<br>Your email from your session is: ' + req.session.user.email;
+//   }
+//   console.log(req.session);
+//   console.log(req.sessionID); 
+//   res.send(html);
+// })
+
+// app.post('/api/sessions', function (req, res) {
+//   User.authenticate(req.body.email, req.body.password, function(error, user) {
+//     req.session.user = user;
+//     res.redirect('/login');
+//   });
+// });
 
 
 
@@ -74,12 +84,13 @@ app.get('/', function (req, res) {
 app.get('/api/blog', function (req, res) {
 	db.Post.find(function(err, posts){
 		res.json(posts);
-		console.log(posts);
 	});
 });
 
 app.get('/api/posts', function(req,res){
-	db.Post.find({}).populate('author').exec(function(err, allPosts){
+	// db.Post.find({}).populate('author').exec(function(err, allPosts){
+		console.log("all posts");
+		console.log(allPosts);
 		res.json(allPosts)
 	});
 });
@@ -95,22 +106,23 @@ app.get("/api/posts/:id",function(req,res){
 //create
 
 app.post('/api/posts', function (req, res) {
-  	var newAuthor = new db.Author({
-  		name:req.body.authorName
-  	});
-  		console.log(newAuthor);
-  		newAuthor.save();
-
-  	var newPost = new db.Post ({
-  	inputName: req.body.inputName,
-  	authorName: newAuthor._id,
-  	inputPost: req.body.inputPost
+  	var author = new db.Author({
+  		name: req.body.authorName
   	});
 
-  	console.log(newPost);
-  	newPost.save(function(err, savedPosts){
-  		res.json(savedPosts);
+
+  	author.save(function(err, author) {
+	  	var post = new db.Post ({
+		  	inputName: req.body.inputName,
+		  	author: author._id,
+		  	inputPost: req.body.inputPost
+	  	});
+  		
+  		post.save(function(err, post){
+  			res.json(post);
+  		});
   	});
+
  });
 
 // app.post('/api/blog', function (req,res){
@@ -138,9 +150,10 @@ app.post('/api/posts', function (req, res) {
 
 //update/edit blog posts
 
-app.put('/api/blog/:id', function(req,res){
+app.put('/api/post/:id', function(req,res){
 	var targetId = (req.params.id)
-	db.Post.findOne({_id:targetId}, function(err, foundPost){
+	db.Post.findOne({_id:targetId}, function(err, foundPost){			authorName: $('#editAuthorName').val(),
+
 
 	foundPost.inputName = req.body.inputName || foundPost.inputName;
 	foundPost.authorName = req.body.authorName || foundPost.authorName;
@@ -156,10 +169,10 @@ app.put('/api/blog/:id', function(req,res){
 
 app.delete ('/api/posts/:id', function(req,res){
 	var targetId = (req.params.id);
-	db.Post.findOneAndRemove({_id: targetId}, function(err, deletedPhrase){
-		res.json(deletedPhrase);
-	})
-})
+	db.Post.findOneAndRemove({_id: targetId}, function(err, deletedPost){
+		res.json(deletedPost);
+	});
+});
 
 //get all comments for one post
 
@@ -173,9 +186,29 @@ app.get('/api/posts/:postid/comments', function(req,res){
 
 app.post('/api/posts/:postid/comments', function(req,res){
 	db.Post.findOne({_id:req.params.postid},function(err,post){
-		var newComment = new db.Comment({commentPost: req.body.commentPost});
+		var newComment = new db.Comment({commentPost: req.body.commentPost, _id: req.params.postid});
 			post.comments.push(newComment);
 			res.json(newComment);
+	});
+});
+
+//update single comment
+
+app.put('/api/posts/:postid/comments/:commentid', function(req,res){
+	db.Comments.findOne({_id:req.params.commentid},function(err, foundComment){
+		foundComment.commentPost = req.body.commentPost || foundPost.commentPost;
+
+		foundComment.save(function(err,savedComments){
+		res.json(savedComments);
+		});
+	});
+});	
+
+//delete a comment
+
+app.delete('/api/posts/:postid/comments/:commentid', function(req,res){
+	db.Comments.findOneAndRemove({_id: req.params.commentid}, function(err, deletedComment){
+		res.json(deletedComment);
 	});
 });
 
@@ -190,7 +223,7 @@ app.get('/api/authors', function(req,res){
 //create a new author
 
 app.post('/api/authors', function(req,res){
-	var newAuthor = new db.Author({commentauthor: req.body.commentAuthor});
+	var newAuthor = new db.Author({authorName: req.body.commentAuthor});
 	newAuthor.save(function(err, author){
 		res.json(author);
 	});
@@ -211,12 +244,5 @@ app.put('/api/posts/:postid/authors/:authorid', function(req,res){
 
 
 // listen on port 3000
-var server = app.listen(process.env.PORT || 3000, function () {
-
-  var host = server.address().address;
-  var port = server.address().port;
-
-  console.log('Example app listening at http://%s:%s', host, port);
-
-});
-
+app.listen(process.env.PORT || 3000);
+  console.log('server started on localhost:3000');

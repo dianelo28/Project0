@@ -50,27 +50,29 @@ $.ajax({
 
 //create new comment
 
+
+//comment on click finding the closest blog post
 $(document).on('click', '.commentButton', function(event){
-	postId = $($(this).closest('.blog')).attr('data-id');
+	var postId = $($(this).closest('.blog')).attr('data-id');
 	console.log(postId);
 
-
+// when comment is submitted
 	$('#submitComment').on('click', function(event){
 
 	var $newComment = {
-		commentAuthor: $('#commentAuthor').val(),
+		// commentAuthor: $('#commentAuthor').val(),
 		commentPost: $('#commentPost').val()
 	}
 
 	console.log($newComment);
 
 	$.ajax({
-	url:'/api/posts',
+	url:'/api/posts/'+ postId +'/comments/',
 	type:'POST',
 	data: $newComment,
 	success: function(data) {
 		var $commentAdd = $(commentTemplate(data));
-		$blog.prepend($commentAdd);
+		$("#commentPlacement-" + data._id).append($commentAdd);
 		console.log($newComment);
 		console.log(data);
 			$("#comment").modal("hide")
@@ -78,7 +80,6 @@ $(document).on('click', '.commentButton', function(event){
 	});
 	});
 });
-
 
 //edit a post
 
@@ -101,13 +102,12 @@ $('#submitEdit').on('click', function(event){
 
 	var post = {
 			inputName: $('#editInputName').val(),
-			authorName: $('#editAuthorName').val(),
 			inputPost: $('#editInputPost').val()
 		}
 		console.log(post);
 
 	$.ajax({
-		url:'/api/blog/' + postId,
+		url:'/api/posts/' + postId,
 		type:'PUT',
 		data: post,
 		success: function(data){
@@ -124,7 +124,7 @@ $('#deletePost').on('click', function(event){
 	console.log(phraseId)	
 
 	$.ajax({
-		url:'/api/blog/' + postId,
+		url:'/api/posts/' + postId,
 		type:'DELETE',
 		success: function(data){
 			$('#flip-' + postId).remove();

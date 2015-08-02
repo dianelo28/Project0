@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/dianelo28/Project0#readme",
   "dependencies": {
+    "bcrypt": "^0.8.3",
     "body-parser": "^1.13.2",
     "chai": "^3.0.0",
     "cheerio": "^0.19.0",

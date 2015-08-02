@@ -3,7 +3,7 @@ var mongoose = require('mongoose'),
 //Authors
 
 var AuthorSchema = new Schema({
-	commentAuthor: String
+	name: String
 })
 
 var Author = mongoose.model('Author', AuthorSchema);
@@ -21,7 +21,7 @@ var Comment = mongoose.model('Comment', CommentSchema);
 
 var BlogPostSchema = new Schema({
 	inputName: String,
-	authorName: {type: Schema.Types.ObjectId, ref:"Author"},
+	author: {type: Schema.Types.ObjectId, ref:"Author"},
 	inputPost: String,
 	comments:[CommentSchema]
 })
@@ -35,5 +35,5 @@ var Post = mongoose.model('Post', BlogPostSchema);
 
 module.exports.Post = Post;
 module.exports.Author = Author;
-module.exports.Comment = Comment
+module.exports.Comment = Comment;
 

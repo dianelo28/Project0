@@ -157,14 +157,15 @@
               <%= inputName %> 
             </h2>
             <h5>
-              Written by: <%= authorName %>
+              Written by: <%= author.name %>
             </h5>
           </div>
           <div id="panel">
             <h4>
               <%= inputPost %>
               <br>
-
+              <dl> Comments: </dl>
+              <div id='commentPlacement-<%=_id%>'></div>
               <h7> 
                 <button type="button" class="btn btn-default btn-xs btn pull-right commentButton" data-toggle="modal" data-target="#comment" role="button"><a><i class="fa fa-comment-o buttonText"></i><b>Leave a comment</b><a>
                 </button>
@@ -186,8 +187,6 @@
       <script type="text/template" id="commentTemplate">
         <div class="comments" id="comment-<%= _id %>" data-id= "<%= _id %>">
           <div class="comment">
-             <dl> Comments: </dl>
-                <dt> <%= commentAuthor %> says:</dt>
                 <dd> <%= commentPost %> </dd>
           </div>
         </div> 
